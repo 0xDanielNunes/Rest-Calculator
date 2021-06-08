@@ -1,17 +1,23 @@
-package controller;
+package com.controller;
 
 import model.Result;
-import service.Operations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+import service.Operations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-@SpringBootApplication(scanBasePackages = "service")
+import javax.naming.ldap.Control;
+
+
+
+@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @RestController
+@ComponentScan(basePackages = "service")
 public class Controller {
 
 	private final Operations operationsService;
@@ -20,6 +26,7 @@ public class Controller {
 	public Controller(Operations operationsService) {
 
 		this.operationsService = operationsService;
+
 
 	}
 
@@ -49,9 +56,5 @@ public class Controller {
 		return ResponseEntity
 				.ok()
 				.body(operationsService.div(a,b));
-	}
-
-	public static void main(String[] args) {
-		SpringApplication.run(Controller.class, args);
 	}
 }
