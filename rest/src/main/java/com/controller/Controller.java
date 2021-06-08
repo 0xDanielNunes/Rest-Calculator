@@ -1,60 +1,46 @@
 package com.controller;
 
-import model.Result;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
-import service.Operations;
+import com.config.ResponseEntityMaker;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.naming.ldap.Control;
 
-
-
-@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @RestController
-@ComponentScan(basePackages = "service")
+@ComponentScan(basePackages = "com.service")
 public class Controller {
 
-	private final Operations operationsService;
+
+	private final ResponseEntityMaker responseMaker;
 
 	@Autowired
-	public Controller(Operations operationsService) {
+	public Controller(ResponseEntityMaker responseMaker) {
 
-		this.operationsService = operationsService;
+		this.responseMaker = responseMaker;
 
 
 	}
 
 	@GetMapping(value = "/sum")
-	public ResponseEntity<Result> sum(@RequestParam(value = "a") String a, @RequestParam(value = "b") String b){
-		return ResponseEntity
-				.ok()
-				.body(operationsService.sum(a,b));
+	public ResponseEntity<String> sum(@RequestParam(value = "a") String a, @RequestParam(value = "b") String b){
+		return responseMaker.newResponseEntity(a,b,"sum");
 	}
 
 	@GetMapping(value = "/sub")
-	public ResponseEntity<Result> sub(@RequestParam(value = "a") String a, @RequestParam(value = "b") String b){
-		return ResponseEntity
-				.ok()
-				.body(operationsService.sub(a,b));
+	public ResponseEntity<String> sub(@RequestParam(value = "a") String a, @RequestParam(value = "b") String b){
+		return responseMaker.newResponseEntity(a,b,"sub");
 	}
 
 	@GetMapping(value = "/mul")
-	public ResponseEntity<Result> mul(@RequestParam(value = "a") String a, @RequestParam(value = "b") String b){
-		return ResponseEntity
-				.ok()
-				.body(operationsService.mul(a,b));
+	public ResponseEntity<String> mul(@RequestParam(value = "a") String a, @RequestParam(value = "b") String b){
+		return responseMaker.newResponseEntity(a,b,"mul");
 	}
 
 	@GetMapping(value = "/div")
-	public ResponseEntity<Result> div(@RequestParam(value = "a") String a, @RequestParam(value = "b") String b){
-		return ResponseEntity
-				.ok()
-				.body(operationsService.div(a,b));
+	public ResponseEntity<String> div(@RequestParam(value = "a") String a, @RequestParam(value = "b") String b){
+		return responseMaker.newResponseEntity(a,b,"div");
 	}
 }
