@@ -18,9 +18,9 @@ public class MessagingRabbitmqApplication {
     }
 
     @RabbitListener(queues = "messageQueue")
-    public String listenSumMessage(OperationWrapper operationDTO) {
-        log.info("CalculatorService Receive Request Message: "+operationDTO);
-        String result = calculatorService.calculate(operationDTO);
+    public String listenSumMessage(OperationWrapper wrapper) {
+        log.info("CalculatorService Receive Request Message: "+ wrapper);
+        String result = calculatorService.calculate(wrapper);
         log.info("CalculatorService Send Response Message: "+result);
         return result;
     }

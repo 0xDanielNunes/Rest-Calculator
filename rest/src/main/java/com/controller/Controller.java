@@ -21,7 +21,6 @@ public class Controller {
 
 		this.responseMaker = responseMaker;
 
-
 	}
 
 	@GetMapping(value = "/sum")

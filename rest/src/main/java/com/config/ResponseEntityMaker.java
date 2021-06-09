@@ -23,18 +23,24 @@ public class ResponseEntityMaker {
     }
 
     public ResponseEntity<String> newResponseEntity(String a, String b, String op){
+
         OperationWrapper request = new OperationWrapper(a,b,op);
 
-        String result = "{\n"+ "result: " + sender.sendMessage(request) + "\n}";
+        String result = "{\n" + "\"result: \"" + sender.sendMessage(request) + "\n}";
 
         HttpHeaders responseHeader = new HttpHeaders();
 
         responseHeader.setContentType(MediaType.APPLICATION_JSON);
-        ResponseEntity<String> responseEntity = ResponseEntity.ok().headers(responseHeader).body(result);
+
+        ResponseEntity<String> responseEntity;
+
+        if(result.contains("You can't divide by 0!"))
+            responseEntity = ResponseEntity.badRequest().headers(responseHeader).body(result);
+        else
+            responseEntity = ResponseEntity.ok().headers(responseHeader).body(result);
 
         log.info("Response sent: " + responseEntity);
 
         return responseEntity;
     }
-
 }

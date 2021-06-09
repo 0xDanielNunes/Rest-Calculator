@@ -22,9 +22,13 @@ public class MessagingConfiguration {
     public SimpleRabbitListenerContainerFactory simpleRabbitListenerContainerFactory(
             SimpleRabbitListenerContainerFactoryConfigurer configurer,
             ConnectionFactory connectionFactory) {
+
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
+
         configurer.configure(factory, connectionFactory);
+
         factory.setAdviceChain(new MdcLogbackRabbitFilter());
+
         return factory;
     }
 

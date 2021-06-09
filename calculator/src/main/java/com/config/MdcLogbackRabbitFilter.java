@@ -13,10 +13,15 @@ public class MdcLogbackRabbitFilter implements MethodInterceptor {
     @Override
     public Object invoke(MethodInvocation methodInvocation) throws Throwable {
         Object[] arguments = methodInvocation.getArguments();
+
         Message message = (Message) arguments[1];
+
         String correlationId =(String) message.getMessageProperties().getHeaders().get("correlationId");
+
         if (correlationId==null || correlationId.isEmpty()) {
+
             correlationId = UUID.randomUUID().toString();
+
             message.getMessageProperties().setHeader("correlationId", correlationId);
         }
 

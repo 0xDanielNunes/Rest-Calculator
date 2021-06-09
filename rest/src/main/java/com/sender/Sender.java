@@ -40,11 +40,17 @@ public class Sender {
 
     private void setRabbitTemplate() {
         rabbitTemplate.setBeforePublishPostProcessors(message -> {
+
             String correlationId = MDC.get("correlationId");
+
             if (correlationId!=null && !correlationId.isEmpty()) {
+
                 message.getMessageProperties().setHeader("correlationId", correlationId);
+
             }
+
             return message;
+
         });
     }
 }
